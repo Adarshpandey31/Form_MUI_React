@@ -1,0 +1,24 @@
+.main-box{
+    border: 1px solid black;
+    display: block;
+    padding: 0;
+    min-height:100vh ;
+    margin: 0;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.top-box{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: auto;
+}
+.Heading{
+    
+
+}
