@@ -19,6 +19,43 @@
     width: auto;
 }
 .Heading{
-    
+}
 
+
+/* For fading out the form */
+.form-fade-out-enter {
+  opacity: 1;
+}
+
+.form-fade-out-enter-active {
+  opacity: 0;
+  transition: opacity 600ms ease-in-out;
+}
+
+.form-fade-out-exit {
+  opacity: 0;
+}
+
+.form-fade-out-exit-active {
+  opacity: 1;
+  transition: opacity 600ms ease-in-out;
+}
+
+/* For fading in the form */
+.form-fade-in-enter {
+  opacity: 0;
+}
+
+.form-fade-in-enter-active {
+  opacity: 1;
+  transition: opacity 600ms ease-in-out;
+}
+
+.form-fade-in-exit {
+  opacity: 1;
+}
+
+.form-fade-in-exit-active {
+  opacity: 0;
+  transition: opacity 600ms ease-in-out;
 }

@@ -9,10 +9,11 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import { CheckBox } from '@mui/icons-material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CloseIcon from '@mui/icons-material/Close';
+import { CSSTransition } from 'react-transition-group';
 
 function Form() {
   const [formData, setFormData] = useState({});
-  const [Heading, setHeading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const questions = [
@@ -36,73 +37,85 @@ function Form() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prevQuestion) => prevQuestion + 1);
     } else {
-      // Do something with the final formData (e.g., submit the data)
-      console.log(formData);
+      if (showForm) {
+        // If form is visible, hide it
+        setFormData({});
+        setCurrentQuestion(0);
+        setShowForm(false);
+      } else {
+        // If form is already hidden, submit the data or perform any other action
+        console.log(formData);
+        setShowForm(true);
+      }
     }
   };
 
   return (
     <>
-
-      {Heading &&
-        (
-          <div className="title">
-
+      <CSSTransition
+        in={!showForm}
+        timeout={600}
+        classNames="form-fade-out"
+        unmountOnExit
+      >
+        <div className="title">
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            minHeight="100vh"
+            fontSize={22}
+            padding="0"
+            margin="0"
+            sx={{ fontFamily: ['arial'] }}>
             <Box
+              marginBottom={3}>
+              Brand Feedback Form
+            </Box>
+            <Box
+              marginBottom={3}
+              fontStyle={blur}
+              fontWeight={1}
+              sx={{ opacity: [0.5] }}>
+              We are committed to delivering the best experiences
+            </Box>
+            <Box
+              mt={1}
               display="flex"
-              flexDirection="column"
+              flexDirection="row"
               alignItems="center"
-              justifyContent="center"
-              minHeight="100vh"
-              fontSize={22}
-              padding="0"
-              margin="0"
-              sx={{ fontFamily: ['arial'] }}
+              justifyContent="right"
+              paddingLeft={12}
             >
+              <Button sx={{ padding: [1.1], fontSize: [18], fontWeight: ['bold'], fontFamily: ['arial'] }} variant="contained" onClick={() => setShowForm(true)}>
+                Tell us what you think
+              </Button>
               <Box
-                marginBottom={3}>
-                Brand Feedback Form
-              </Box>
-              <Box
-                marginBottom={3}
-                fontStyle={blur}
-                fontWeight={1}
-                sx={{ opacity: [0.5] }}>
-                We are committed to delivering the best experiences
-              </Box>
-              <Box
-                mt={1}
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="right"
-                paddingLeft={12}
-              >
-                <Button sx={{ padding: [1.1], fontSize: [18], fontWeight: ['bold'], fontFamily: ['arial'] }} variant="contained" onClick={() => setHeading(false)}>
-                  Tell us what you think
-                </Button>
-                <Box
-                  sx={{ padding: [1], fontSize: [15] }}>
-                  press Enter ↵
-                </Box>
-              </Box>
-              <Box
-                mt={1}
-                sx={{ fontSize: [15] }}
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="center">
-                <AlarmIcon sx={{ fontSize: [17], marginRight: [0.5] }} />
-                Takes 1 minute
+                sx={{ padding: [1], fontSize: [15] }}>
+                click here ↵
               </Box>
             </Box>
-          </div >
-        )
-      }
-      {
-        !Heading &&
-        (
+            <Box
+              mt={1}
+              sx={{ fontSize: [15] }}
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="center">
+              <AlarmIcon sx={{ fontSize: [17], marginRight: [0.5] }} />
+              Takes 1 minute
+            </Box>
+          </Box>
+        </div >
+      </CSSTransition>
+      <CSSTransition
+        in={showForm}
+        timeout={600}
+        classNames="form-fade-in"
+        unmountOnExit
+      >
+        <div className="title">
           <Box
             display="flex"
             flexDirection="column"
@@ -114,67 +127,71 @@ function Form() {
             fontSize={23}
             fontFamily="arial"
           >
-            <Box mb={2.5} fontSize={23}>
+            <Box mb={2.5}
+              fontSize={23}
+              paddingLeft={20}
+              paddingRight={20}>
               {questions[currentQuestion][0]}
             </Box>
             <Box
               display="flex"
               flexDirection="column"
-              sx={{ borderTop: [0] }}
+              alignItems="left"
+              justifyContent="center"
+              paddingLeft={20}
+              paddingRight={20}
             >
-              { questions[currentQuestion][1]==="input" && 
-              (<TextField
-                variant="outlined"
-                // name={`questionInput${currentQuestion}`}
-                value={formData[`questionInput${currentQuestion}`] || ''}
-                onChange={handleInputChange}
-                size="small"
-                label={"Type your answer here..."}
-              />)}
-              { questions[currentQuestion][1]==="rating" && 
-              (<ButtonGroup fullWidth="10" variant="outlined" aria-label="outlined button group">
-                <Button>1</Button>
-                <Button>2</Button>
-                <Button>3</Button>
-                <Button>4</Button>
-                <Button>5</Button>
-              </ButtonGroup>
-              )}
-              { questions[currentQuestion][1]==="tick" &&
-              (<Box mt={2}
-                display="flex"
-                flexDirection="column"
-                alignItems="left"
-                justifyContent="center"
-                textAlign="left">
-                <Button startIcon={< DoneIcon />}  sx={{backgroundColor:["rgb(4,95,167, 0.1)"], textAlign:["left"], alignItems:["left"], marginBottom:[1], color:["rgb(4,95,167)"], border:[1], width:["14%"], paddingLeft: [2], paddingRight: [2], fontSize: [18], fontFamily: ['arial'] }} variant="contained" onClick={handleNextQuestion}>
-                  Yes
-                </Button>
-                <Button startIcon={<CloseIcon />} sx={{backgroundColor:["rgb(4,95,167, 0.1)"], color:["rgb(4,95,167)"], border:[1], width:["14%"], paddingLeft: [2], paddingRight: [2], fontSize: [18], fontFamily: ['arial'] }} variant="contained" onClick={handleNextQuestion}>
-                  No
-                </Button>
-              </Box>
-              )}
-              <Box mt={2}
+              {questions[currentQuestion][1] === "input" &&
+                (<TextField
+                  variant="outlined"
+                  // name={`questionInput${currentQuestion}`}
+                  value={formData[`questionInput${currentQuestion}`] || ''}
+                  onChange={handleInputChange}
+                  size="small"
+                  label={"Type your answer here..."}
+                />)}
+              {questions[currentQuestion][1] === "rating" &&
+                (<ButtonGroup fullWidth="10" variant="outlined" aria-label="outlined button group">
+                  <Button>1</Button>
+                  <Button>2</Button>
+                  <Button>3</Button>
+                  <Button>4</Button>
+                  <Button>5</Button>
+                </ButtonGroup>
+                )}
+              {questions[currentQuestion][1] === "tick" &&
+                (<Box mt={2}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="left"
+                  justifyContent="center"
+                  textAlign="center">
+                  <Button startIcon={< DoneIcon />} sx={{ backgroundColor: ["rgb(4,95,167, 0.1)"], textAlign: ["center"], alignItems: ["center"], marginBottom: [1], color: ["rgb(4,95,167)"], border: [1], width: ["16%"], paddingLeft: [4], paddingRight: [4], fontSize: [18], fontFamily: ['arial'] }} variant="contained" onClick={handleNextQuestion}>
+                    Yes
+                  </Button>
+                  <Button startIcon={<CloseIcon />} sx={{ backgroundColor: ["rgb(4,95,167, 0.1)"], color: ["rgb(4,95,167)"], border: [1], width: ["16%"], fontSize: [18], fontFamily: ['arial'] }} variant="contained" onClick={handleNextQuestion}>
+                    No
+                  </Button>
+                </Box>
+                )}
+              <Box mt={2.5}
                 display="flex"
                 flexDirection="row"
-                alignItems="left"
-                justifyContent="center"
-                >
+                alignItems="center"
+                justifyContent="left"
+              >
                 <Button endIcon={< DoneIcon fontSize='large' />} sx={{ paddingLeft: [2], paddingRight: [2], fontSize: [18], fontWeight: ['bold'], fontFamily: ['arial'] }} variant="contained" onClick={handleNextQuestion}>
                   OK
                 </Button>
                 <Box
                   sx={{ padding: [1], fontSize: [15] }}>
-                  press Enter ↵
+                  click here ↵
                 </Box>
               </Box>
             </Box>
           </Box>
-        )
-
-      }
-
+        </div>
+      </CSSTransition>
     </>
   );
 }
