@@ -22,15 +22,15 @@ function Form() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const questions = [
-    ["Enter your name*", "input"],
-    ["Enter your brand name*", "input"],
-    ["How satisfied are you with the overall experience of working with upcred.ai*", "rating"],
-    ["Did upcred.ai team effectively understand and address your brand's goals and objectives?*", "tick"],
-    ["How well did our team communicate and collaborate with your brand throughout the campaign?*", "rating"],
-    ["Were the deliverables and content produced by upcred.ai in line with your expectations and brand guidelines?*", "tick"],
-    ["Did the campaign generate the desired results and meet your marketing objectives?*", "tick"],
-    ["How likely are you to recommend upcred.ai to other brands based on your experience?*", "rating"],
-    ["Would you consider partnering with upcred.ai again for future campaigns?*", "tick"],
+    ["Enter your name*", "input", ""],
+    ["Enter your brand name*", "input", ""],
+    ["How satisfied are you with the overall experience of working with upcred.ai*", "rating", "" ],
+    ["Did upcred.ai team effectively understand and address your brand's goals and objectives?*", "tick", ""],
+    ["How well did our team communicate and collaborate with your brand throughout the campaign?*", "rating", "" ],
+    ["Were the deliverables and content produced by upcred.ai in line with your expectations and brand guidelines?*", "tick", ""],
+    ["Did the campaign generate the desired results and meet your marketing objectives?*", "tick", ""],
+    ["How likely are you to recommend upcred.ai to other brands based on your experience?*", "rating", ""],
+    ["Would you consider partnering with upcred.ai again for future campaigns?*", "tick" , "last"],
   ];
 
   const handleInputChange = (e) => {
@@ -384,7 +384,8 @@ function Form() {
                   justifyContent="left"
                 // border={1}
                 >
-                  <Button endIcon={< DoneIcon fontSize='large' />}
+                   <Button 
+                   endIcon={questions[currentQuestion][2] !== "last" && <DoneIcon fontSize='large' />}
                     sx={{
                       paddingLeft: [2],
                       paddingRight: [2],
@@ -408,7 +409,8 @@ function Form() {
                     variant="contained"
                     onClick={handleNextQuestion}
                   >
-                    OK
+                    {questions[currentQuestion][2] === "last" ? "Submit" : "OK"}
+                    
                   </Button>
                   <Box
                     sx={{
