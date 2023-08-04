@@ -9,34 +9,30 @@
     justify-content: center;
 }
 
-@media (max-width: 700px) {
-
-}
-
-/* Fade-in and fade-out effect for each question change */
-.question-transition-enter,
-.question-transition-exit {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.question-transition-enter-active,
-.question-transition-exit-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 300ms ease-in, transform 300ms ease-in;
-}
-
-
+/* Fade-in and fade-out effect for the form */
 .form-fade-out-enter,
 .form-fade-out-exit {
+  transform: translateY(20px);
   opacity: 0;
-  transform: translateY(10px);
 }
 
 .form-fade-out-enter-active,
 .form-fade-out-exit-active {
-  opacity: 1;
   transform: translateY(0);
-  transition: opacity 300ms ease-in, transform 300ms ease-in;
+  opacity: 1;
+  transition: transform 600ms ease-in, opacity 600ms ease-in;
+}
+
+/* Slide-in and slide-out effect for each question change */
+.question-transition-enter,
+.question-transition-exit {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.question-transition-enter-active,
+.question-transition-exit-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 600ms ease-in, opacity 600ms ease-in;
 }
