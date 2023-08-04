@@ -396,8 +396,8 @@ function Form() {
                       },
                       '@media (max-width: 700px)': {
                         fontSize: 15,
-                        paddingLeft: 1.5,
-                        paddingRight: 1.5,
+                        paddingLeft: 2,
+                        paddingRight: 2,
                       },
                       '@media (max-width: 350px)': {
                         fontSize: 14,
