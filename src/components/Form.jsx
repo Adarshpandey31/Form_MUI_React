@@ -230,8 +230,8 @@ function Form() {
                 },
                 '@media (max-width: 350px)': {
                   fontSize: 16,
-                  paddingLeft: 0.5,
-                  paddingRight: 0.5,
+                  paddingLeft: 1,
+                  paddingRight: 1,
                 },
               }}
             >
@@ -255,8 +255,8 @@ function Form() {
                   },
                   '@media (max-width: 350px)': {
                     fontSize: 15,
-                    paddingLeft: 0.5,
-                    paddingRight: 0.5,
+                    paddingLeft: 1,
+                    paddingRight: 1,
                   },
                 }}
               >
@@ -284,8 +284,8 @@ function Form() {
                   },
                   '@media (max-width: 350px)': {
                     fontSize: 14,
-                    paddingLeft: 0.5,
-                    paddingRight: 0.5,
+                    paddingLeft: 1,
+                    paddingRight: 1,
                   },
                 }}
               >
@@ -401,8 +401,8 @@ function Form() {
                       },
                       '@media (max-width: 350px)': {
                         fontSize: 14,
-                        paddingLeft: 0.5,
-                        paddingRight: 0.5,
+                        paddingLeft: 1,
+                        paddingRight: 1,
                       },
                     }}
                     variant="contained"
