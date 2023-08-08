@@ -230,28 +230,31 @@ function Form() {
                 flexDirection="column"
                 alignItems="left"
                 justifyContent="center"
-                paddingLeft={25}
-                paddingRight={20}
+                paddingLeft={30}
+                paddingRight={30}
+                paddingBottom={6}
                 height="100vh"
                 fontFamily="arial"
                 margin={0}
                 // border={1}
                 sx={{
-                  fontSize: [18],
+                  fontSize: [22],
                   overflow: "hidden",
                   '@media (max-width: 1300px)': {
-                    paddingLeft: 12,
-                    paddingRight: 12,
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    fontSize: [21]
                   },
                   '@media (max-width: 900px)': {
-                    
                     paddingLeft: 10,
                     paddingRight: 10,
+                    fontSize: [20]
                   },
                   '@media (max-width: 800px)': {
                   
                     paddingLeft: 6,
                     paddingRight: 5,
+                    fontSize: [19]
                   },
                   '@media (max-width: 700px)': {
                     paddingLeft: 5,
@@ -358,9 +361,9 @@ function Form() {
                           color: ratingClicked === rating ? "white" : "",
                           animation: isBlinking && ratingClicked === rating ? "blinkTwice 0.3s 2" : "none",
                           margin: '0 2px', // Added margin to left and right
-                          height: '40px', // Increased height
-                          width: '120px', // Decreased width
-                          fontSize: '14px', // Decreased font size
+                          height: '55px', // Increased height
+                          width: '140px', // Decreased width
+                          fontSize: '18px', // Decreased font size
                         }}
                       >
                         {rating}
