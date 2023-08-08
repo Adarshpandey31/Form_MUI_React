@@ -30,12 +30,12 @@ function Form() {
   const questions = [
     ["Enter your name*", "input", ""],
     ["Enter your brand name*", "input", ""],
-    ["How satisfied are you with the overall experience of working with upcred.ai*", "rating", ""],
+    ["How satisfied are you with the overall experience of working with upcred.ai*", "rating", "satisfaction"],
     ["Did upcred.ai team effectively understand and address your brand's goals and objectives?*", "tick", ""],
-    ["How well did our team communicate and collaborate with your brand throughout the campaign?*", "rating", ""],
+    ["How well did our team communicate and collaborate with your brand throughout the campaign?*", "rating", "good"],
     ["Were the deliverables and content produced by upcred.ai in line with your expectations and brand guidelines?*", "tick", ""],
     ["Did the campaign generate the desired results and meet your marketing objectives?*", "tick", ""],
-    ["How likely are you to recommend upcred.ai to other brands based on your experience?*", "rating", ""],
+    ["How likely are you to recommend upcred.ai to other brands based on your experience?*", "rating", "likely"],
     ["Would you consider partnering with upcred.ai again for future campaigns?*", "tick", "last"],
   ];
 
@@ -241,6 +241,11 @@ function Form() {
                   fontSize: [22],
                   overflow: "hidden",
                   '@media (max-width: 1300px)': {
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                    fontSize: [21]
+                  },
+                  '@media (max-width: 1100px)': {
                     paddingLeft: 15,
                     paddingRight: 15,
                     fontSize: [21]
@@ -251,7 +256,7 @@ function Form() {
                     fontSize: [20]
                   },
                   '@media (max-width: 800px)': {
-                  
+
                     paddingLeft: 6,
                     paddingRight: 5,
                     fontSize: [19]
@@ -261,7 +266,7 @@ function Form() {
                     paddingRight: 2,
                   },
                   '@media (max-width: 500px)': {
-                    
+
                     paddingLeft: 6,
                     paddingRight: 4,
                   },
@@ -293,7 +298,7 @@ function Form() {
                     },
                   }}
                 >
-                  <span style={{ color: "rgb(4,95,167)",marginLeft: '-40px', marginRight: '4px', fontSize: '15px' }}>{currentQuestion + 1}</span>
+                  <span style={{ color: "rgb(4,95,167)", marginLeft: '-40px', marginRight: '4px', fontSize: '15px' }}>{currentQuestion + 1}</span>
                   <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} />
                   <span style={{ marginLeft: '10px' }}>{questions[currentQuestion][0]}</span>
                 </Box>
@@ -309,19 +314,18 @@ function Form() {
                     '@media (max-width: 1300px)': {
                       fontSize: 18,
                       paddingLeft: 5,
-                      paddingRight: 8,
+                      paddingRight: 10,
                     },
                     '@media (max-width: 700px)': {
                       fontSize: 16,
                       paddingLeft: 3,
-                      paddingRight: 5,
+                      paddingRight: 3,
                     },
                     '@media (max-width: 500px)': {
                       fontSize: 14,
                       paddingLeft: 1,
-                      paddingRight: 1.5,
+                      paddingRight: 1,
                     },
-                    
                   }}
                 >
                   {questions[currentQuestion][1] === "input" &&
@@ -344,32 +348,127 @@ function Form() {
                       }}
                     />)}
                   {questions[currentQuestion][1] === "rating" &&
-                    (<ButtonGroup fullWidth={true} variant="outlined" aria-label="outlined button group" sx={{ marginTop: '10px' }}>
-                    {[1, 2, 3, 4, 5].map((rating) => (
-                      <Button
-                        key={rating}
-                        onClick={() => {
-                          handleRatingClick(rating);
-                          setTimeout(() => {
-                            handleNextQuestion(); // Call the function to move to the next question
-                          }, 600); // Wait for the blinking animation duration before moving to the next question
-                        }}
-                        style={{
-                          backgroundColor: ratingClicked === rating ? "rgb(4, 69, 175)" : "rgb(4, 69, 175, 0.1)",
-                          transition: "background-color 0.3s",
-                          border: `1px solid ${ratingClicked === rating ? "rgb(4, 69, 175)" : "rgb(4, 69, 175)"}`,
-                          color: ratingClicked === rating ? "white" : "",
-                          animation: isBlinking && ratingClicked === rating ? "blinkTwice 0.3s 2" : "none",
-                          margin: '0 2px', // Added margin to left and right
-                          height: '55px', // Increased height
-                          width: '140px', // Decreased width
-                          fontSize: '18px', // Decreased font size
-                        }}
-                      >
-                        {rating}
-                      </Button>
-                    ))}
-                  </ButtonGroup>                  
+                    (<ButtonGroup
+                      fullWidth={true}
+                      variant="outlined"
+                      aria-label="outlined button group"
+                      sx={{
+                        marginTop: '10px',
+                      }}>
+                      {[1, 2, 3, 4, 5].map((rating) => (
+                        <div
+                          key={rating}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            margin: '0 2px',
+                            flex: '1 0 calc(20% - 4px)', // Distribute available space evenly and allow 20% width per button
+                          }}
+                        >
+                          {/* {<span className="responsive-span-600">
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                              {questions[currentQuestion][2] === "satisfaction" && (
+                                <>
+                                  <div>
+                                    1 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Very Dissatisfaction
+                                  </div>
+                                  <div>
+                                    3 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Neutral
+                                  </div>
+                                  <div>
+                                    5 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Very satisfaction
+                                  </div>
+                                </>
+                              )}
+
+                              {questions[currentQuestion][2] === "good" && (
+                                <>
+                                  <div>
+                                    1 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Very Poor
+                                  </div>
+                                  <div>
+                                    3 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Good
+                                  </div>
+                                  <div>
+                                    5 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Excellent
+                                  </div>
+                                </>
+                              )}
+
+                              {questions[currentQuestion][2] === "likely" && (
+                                <>
+                                  <div>
+                                    1 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Most Unlikely
+                                  </div>
+                                  <div>
+                                    3 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Not Sure
+                                  </div>
+                                  <div>
+                                    5 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Most Likely
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </span>
+                          } */}
+                          <Button
+                            onClick={() => {
+                              handleRatingClick(rating);
+                              setTimeout(() => {
+                                handleNextQuestion();
+                              }, 600);
+                            }}
+                            style={{
+                              backgroundColor: ratingClicked === rating ? 'rgb(4, 69, 175)' : 'rgb(4, 69, 175, 0.1)',
+                              transition: 'background-color 0.3s',
+                              border: `1px solid ${ratingClicked === rating ? 'rgb(4, 69, 175)' : 'rgb(4, 69, 175)'}`,
+                              color: ratingClicked === rating ? 'white' : '',
+                              animation: isBlinking && ratingClicked === rating ? 'blinkTwice 0.3s 2' : 'none',
+                              height: '55px',
+                              width: '100%', // Use percentage width
+                              fontSize: `${18 - (Math.floor(rating / 2))}px`, // Adjust font size based on rating
+                            }}
+                          >
+                            {rating}
+                          </Button>
+                          {<span
+                            className="responsive-span"
+                            style={{
+                              marginTop: '12px',
+                              color: 'rgb(4, 69, 175)',
+                              fontSize: '15px', // Initial font size
+                              transition: 'font-size 0.3s', // Add transition for smooth size change
+                            }}
+                          >
+                            {questions[currentQuestion][2] === "satisfaction" && (
+                              <>
+                                {rating === 1 && "Very Dissatisfied"}
+                                {rating === 3 && "Neutral"}
+                                {rating === 5 && "Very Satisfied"}
+                              </>
+                            )}
+
+                            {questions[currentQuestion][2] === "good" && (
+                              <>
+                                {rating === 1 && "Very Poor"}
+                                {rating === 3 && "Good"}
+                                {rating === 5 && "Excellent"}
+                              </>
+                            )}
+
+                            {questions[currentQuestion][2] === "likely" && (
+                              <>
+                                {rating === 1 && "Most Unlikely"}
+                                {rating === 3 && "Not Sure"}
+                                {rating === 5 && "Most Likely"}
+                              </>
+                            )}
+                          </span>
+                          }
+                        </div>
+                      ))}
+                    </ButtonGroup>
                     )}
                   {questions[currentQuestion][1] === "tick" &&
                     (<Box
@@ -394,14 +493,14 @@ function Form() {
                           marginBottom: [1],
                           color: "rgb(4,95,167)",
                           border: ratingClicked === "Yes" ? "2px solid rgb(4, 69, 175)" : "1px solid rgba(4, 95, 167, 0.6)",
-                          width: [140],
+                          width: [150],
                           height: 40,
                           fontSize: [18],
                           fontFamily: ['arial'],
                           '@media (max-width: 700px)': {
-                            width: 120,
-                            height: 35,
-                            fontSize: 15,
+                            width: 130,
+                            height: 36,
+                            fontSize: 16,
                           },
                           '&:hover': {
                             backgroundColor: "rgb(4, 69, 175, 0.25)",
@@ -427,14 +526,14 @@ function Form() {
                           backgroundColor: "rgb(4, 69, 175, 0.15)",
                           color: "rgb(4,95,167)",
                           border: ratingClicked === "No" ? "2px solid rgb(4, 69, 175)" : "1px solid rgba(4, 95, 167, 0.6)",
-                          width: [140],
+                          width: [150],
                           height: 40,
                           fontSize: [18],
                           fontFamily: ['arial'],
                           '@media (max-width: 700px)': {
-                            width: 120,
-                            height: 35,
-                            fontSize: 15,
+                            width: 130,
+                            height: 36,
+                            fontSize: 16,
                           },
                           '&:hover': {
                             backgroundColor: "rgb(4, 69, 175, 0.25)",

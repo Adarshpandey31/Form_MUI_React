@@ -9,6 +9,21 @@
     justify-content: center;
 }
 
+/* Add this CSS to your stylesheet */
+/* Add this CSS to your stylesheet */
+.responsive-span {
+  @media (max-width: 600px) {
+    display: none;
+  }
+  /* Add more media queries as needed for further font size adjustments */
+}
+.responsive-span-600 {
+  @media (min-width: 600px) {
+    display: none;
+  }
+  /* Add more media queries as needed for further font size adjustments */
+}
+
 /* Fade-in and fade-out effect for the form */
 .form-fade-out-enter,
 .form-fade-out-exit {
