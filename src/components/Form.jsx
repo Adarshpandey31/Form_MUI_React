@@ -195,7 +195,7 @@ function Form() {
                 sx={{
                   fontSize: [15],
                   '@media (max-width: 450px)': {
-                    fontSize: 14,
+                    fontSize: 13,
                   },
                 }}>
                 <AlarmIcon sx={{ fontSize: [17], marginRight: [0.5], '@media (max-width: 700px)': { fontSize: 15, }, }} />
