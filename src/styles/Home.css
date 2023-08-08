@@ -26,13 +26,24 @@
 /* Slide-in and slide-out effect for each question change */
 .question-transition-enter,
 .question-transition-exit {
-  transform: translateY(20px);
-  opacity: 0;
+  transform: translateY(0); /* Initial position for the entering question */
+  opacity: 1; /* Initial opacity for the entering question */
 }
 
 .question-transition-enter-active,
 .question-transition-exit-active {
-  transform: translateY(0);
-  opacity: 1;
-  transition: transform 600ms ease-in, opacity 600ms ease-in;
+  transform: translateY(-100%); /* Slide the current question upward */
+  opacity: 0; /* Fade out the current question */
+  transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
+}
+
+
+
+@keyframes blinkTwice {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
 }

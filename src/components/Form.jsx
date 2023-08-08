@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import AlarmIcon from '@mui/icons-material/AccessTimeFilled';
 import DoneIcon from '@mui/icons-material/Done';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -13,6 +14,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 // import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CloseIcon from '@mui/icons-material/Close';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { bottom } from '@popperjs/core';
 
 function Form() {
   const [formData, setFormData] = useState({});
@@ -21,7 +23,9 @@ function Form() {
   const isScreen1000OrLess = useMediaQuery('(max-width:1000px)');
   const transitionKey = `${showForm}-${currentQuestion}`;
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
-  const [ratingClicked, setRatingClicked] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [ratingClicked, setRatingClicked] = useState(null);
+  const [isBlinking, setIsBlinking] = useState(false);
 
   const questions = [
     ["Enter your name*", "input", ""],
@@ -36,12 +40,22 @@ function Form() {
   ];
 
 
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   //for taking output from the rating of the user
   const handleRatingClick = (rating) => {
     setRatingClicked(rating);
+    setIsBlinking(true);
+
     setTimeout(() => {
-      handleNextQuestion();
-    }, 500);
+      setIsBlinking(false);
+    }, 600); // Set the duration of blinking animation
   };
 
   const handleInputChange = (e) => {
@@ -97,12 +111,7 @@ function Form() {
               textAlign="center"
               justifyContent="center"
               minHeight="100vh"
-              // position="fixed"
-              // bottom={0}
-              // left={0}
-              // right={0}
-              // top={0}
-              fontSize={22}
+              fontSize={20}
               padding="0"
               margin="0"
               // border={1}
@@ -119,7 +128,7 @@ function Form() {
             >
               <Box
                 marginBottom={3}
-                // border={1}
+                fontSize={22}
                 sx={{
                   fontFamily: ['arial'],
                   '@media (max-width: 700px)': {
@@ -134,9 +143,9 @@ function Form() {
               </Box>
               <Box
                 marginBottom={3}
-                fontStyle={blur}
+                // fontStyle={blur}
                 fontWeight={1}
-                sx={{ opacity: [0.5], marginBottom: 2.5, }}
+                sx={{ opacity: [0.7], marginBottom: 2.5, }}
               // border={1}
               >
                 We are committed to delivering the best experiences
@@ -162,9 +171,11 @@ function Form() {
                 <Button sx={{
                   '@media (max-width: 700px)': { fontSize: 15, bottom: 0, },
                   '@media (max-width: 450px)': { fontSize: 13, },
-                  padding: [1],
-                  fontSize: [18],
-                  fontWeight: ['bold'],
+                  padding: [1.25],
+                  paddingLeft: [2],
+                  paddingRight: [2],
+                  fontSize: [16],
+                  fontWeight: ['800'],
                   fontFamily: ['arial'],
                   backgroundColor: "rgb(4, 69, 175)",
                   color: "white",
@@ -176,12 +187,12 @@ function Form() {
                 <Box
                   sx={{
                     padding: [1],
-                    fontSize: [15],
+                    fontSize: [13],
                     '@media (max-width: 700px)': { display: "none", },
                   }}
                 // border={1}
                 >
-                  click here ↵
+                  press <strong>Enter ↵</strong>
                 </Box>
               </Box>
               <Box
@@ -219,13 +230,8 @@ function Form() {
                 flexDirection="column"
                 alignItems="left"
                 justifyContent="center"
-                paddingLeft={6}
-                paddingRight={6}
-                // position="fixed"
-                // bottom={0}
-                // left={0}
-                // right={0}
-                // top={0}
+                paddingLeft={25}
+                paddingRight={20}
                 height="100vh"
                 fontFamily="arial"
                 margin={0}
@@ -233,47 +239,60 @@ function Form() {
                 sx={{
                   fontSize: [18],
                   overflow: "hidden",
-                  '@media (max-width: 1000px)': {
-                    fontSize: 16, padding: 0,
+                  '@media (max-width: 1300px)': {
+                    paddingLeft: 12,
+                    paddingRight: 12,
+                  },
+                  '@media (max-width: 900px)': {
+                    
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                  },
+                  '@media (max-width: 800px)': {
+                  
+                    paddingLeft: 6,
+                    paddingRight: 5,
                   },
                   '@media (max-width: 700px)': {
-                    fontSize: 16,
-                    paddingLeft: 2,
+                    paddingLeft: 5,
                     paddingRight: 2,
                   },
-                  '@media (max-width: 350px)': {
-                    fontSize: 16,
-                    paddingLeft: 1,
-                    paddingRight: 1,
+                  '@media (max-width: 500px)': {
+                    
+                    paddingLeft: 6,
+                    paddingRight: 4,
+                  },
+                  '@media (max-width: 300px)': {
+                    paddingLeft: 5,
+                    paddingRight: 3,
                   },
                 }}
               >
-                <Box mb={2.5}
-                  // fontSize={23}
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  mb={2.5}
                   paddingLeft={20}
                   paddingRight={20}
-                  // border={1}
                   sx={{
-                    '@media (max-width: 1000px)': {
-                      fontSize: 18,
-                      padding: 0,
+                    '@media (max-width: 1300px)': {
                       paddingLeft: 5,
                       paddingRight: 5,
                     },
                     '@media (max-width: 700px)': {
-                      fontSize: 16,
                       padding: 0,
-                      paddingLeft: 2,
-                      paddingRight: 2,
+                      paddingLeft: 3,
+                      paddingRight: 3,
                     },
-                    '@media (max-width: 350px)': {
-                      fontSize: 15,
-                      paddingLeft: 1,
-                      paddingRight: 1,
+                    '@media (max-width: 500px)': {
+                      paddingLeft: 1.1,
+                      paddingRight: 1.1,
                     },
                   }}
                 >
-                  {questions[currentQuestion][0]}
+                  <span style={{ color: "rgb(4,95,167)",marginLeft: '-40px', marginRight: '4px', fontSize: '15px' }}>{currentQuestion + 1}</span>
+                  <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} />
+                  <span style={{ marginLeft: '10px' }}>{questions[currentQuestion][0]}</span>
                 </Box>
                 <Box
                   display="flex"
@@ -284,128 +303,151 @@ function Form() {
                   paddingRight={20}
                   // border={1}
                   sx={{
-                    '@media (max-width: 1000px)': {
+                    '@media (max-width: 1300px)': {
                       fontSize: 18,
-                      padding: 0,
                       paddingLeft: 5,
-                      paddingRight: 5,
+                      paddingRight: 8,
                     },
                     '@media (max-width: 700px)': {
                       fontSize: 16,
-                      paddingLeft: 2,
-                      paddingRight: 2,
+                      paddingLeft: 3,
+                      paddingRight: 5,
                     },
-                    '@media (max-width: 350px)': {
+                    '@media (max-width: 500px)': {
                       fontSize: 14,
                       paddingLeft: 1,
-                      paddingRight: 1,
+                      paddingRight: 1.5,
                     },
+                    
                   }}
                 >
                   {questions[currentQuestion][1] === "input" &&
                     (<TextField
-                      variant="outlined"
-                      // name={`questionInput${currentQuestion}`}
+                      variant="standard"
                       value={formData[`questionInput${currentQuestion}`] || ''}
                       onChange={handleInputChange}
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
                       size="small"
-                      label={"Type your answer here..."}
+                      label={formData[`questionInput${currentQuestion}`] ? '' : "Type your answer here..."}
+                      InputProps={{
+                        disableUnderline: true,
+                        style: {
+                          borderBottom: isFocused ? '2px solid rgb(4, 95, 167)' : '1px solid rgba(4, 95, 167, 0.6)',
+                        },
+                        endAdornment: isFocused ? null : (
+                          <></>
+                        ), // Removes the inbuilt hover text
+                      }}
                     />)}
                   {questions[currentQuestion][1] === "rating" &&
-                    (<ButtonGroup fullWidth={true} variant="outlined" aria-label="outlined button group">
-                      <Button key="1" onClick={() => handleRatingClick(1)}
-                        style={{ backgroundColor: ratingClicked === 1 ? "rgb(4, 69, 175)" : "", transition: "background-color 0.3s", }}
+                    (<ButtonGroup fullWidth={true} variant="outlined" aria-label="outlined button group" sx={{ marginTop: '10px' }}>
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <Button
+                        key={rating}
+                        onClick={() => {
+                          handleRatingClick(rating);
+                          setTimeout(() => {
+                            handleNextQuestion(); // Call the function to move to the next question
+                          }, 600); // Wait for the blinking animation duration before moving to the next question
+                        }}
+                        style={{
+                          backgroundColor: ratingClicked === rating ? "rgb(4, 69, 175)" : "rgb(4, 69, 175, 0.1)",
+                          transition: "background-color 0.3s",
+                          border: `1px solid ${ratingClicked === rating ? "rgb(4, 69, 175)" : "rgb(4, 69, 175)"}`,
+                          color: ratingClicked === rating ? "white" : "",
+                          animation: isBlinking && ratingClicked === rating ? "blinkTwice 0.3s 2" : "none",
+                          margin: '0 2px', // Added margin to left and right
+                          height: '40px', // Increased height
+                          width: '120px', // Decreased width
+                          fontSize: '14px', // Decreased font size
+                        }}
                       >
-                        1
+                        {rating}
                       </Button>
-                      <Button key="2" onClick={() => handleRatingClick(2)}
-                        style={{ backgroundColor: ratingClicked === 2 ? "rgb(4, 69, 175)" : "", transition: "background-color 0.3s", }}
-                      >
-                        2
-                      </Button>
-                      <Button key="3" onClick={() => handleRatingClick(3)}
-                        style={{ backgroundColor: ratingClicked === 3 ? "rgb(4, 69, 175)" : "", transition: "background-color 0.3s", }}
-                      >
-                        3
-                      </Button>
-                      <Button key="4" onClick={() => handleRatingClick(4)}
-                        style={{ backgroundColor: ratingClicked === 4 ? "rgb(4, 69, 175)" : "", transition: "background-color 0.3s", }}
-                      >
-                        4
-                      </Button>
-                      <Button key="5" onClick={() => handleRatingClick(5)}
-                        style={{ backgroundColor: ratingClicked === 5 ? "rgb(4, 69, 175)" : "", transition: "background-color 0.3s", }}
-                      >
-                        5
-                      </Button>
-                    </ButtonGroup>
+                    ))}
+                  </ButtonGroup>                  
                     )}
                   {questions[currentQuestion][1] === "tick" &&
-                    (<Box mt={2}
+                    (<Box
                       display="flex"
                       flexDirection="column"
                       alignItems="left"
                       justifyContent="center"
                       textAlign="center"
                       sx={{
-                        '@media (max-width: 1000px)': {
+                        '@media (max-width: 1300px)': {
                           fontSize: 16,
-                          marginTop: 1,
                         },
                         '@media (max-width: 700px)': {
                           fontSize: 16,
-                          marginTop: 0,
                         },
                       }}
                     >
-                      <Button startIcon={< DoneIcon />}
+                      <Button
+                        startIcon={<DoneIcon />}
                         sx={{
                           backgroundColor: "rgb(4, 69, 175, 0.15)",
                           marginBottom: [1],
                           color: "rgb(4,95,167)",
-                          border: [1],
+                          border: ratingClicked === "Yes" ? "2px solid rgb(4, 69, 175)" : "1px solid rgba(4, 95, 167, 0.6)",
                           width: [140],
                           height: 40,
                           fontSize: [18],
                           fontFamily: ['arial'],
                           '@media (max-width: 700px)': {
-                            fontSize: 16,
-                            width: 120,
-                            height: 35,
-                          },
-                          '@media (max-width: 600px)': {
                             width: 120,
                             height: 35,
                             fontSize: 15,
                           },
-                        }} variant="contained"
-                        key="Yes" onClick={() => handleRatingClick("Yes")}
-                        style={{ backgroundColor: ratingClicked === "Yes" ? "rgb(4, 69, 175)" : "", transition: "background-color 0.3s", }}
+                          '&:hover': {
+                            backgroundColor: "rgb(4, 69, 175, 0.25)",
+                            border: "2px solid rgb(4, 69, 175)",
+                          },
+                          animation: isBlinking && ratingClicked === "Yes" ? "blinkTwice 0.3s 2" : "none",
+                        }}
+                        variant="contained"
+                        key="Yes"
+                        onClick={() => {
+                          handleRatingClick("Yes");
+                          setTimeout(() => {
+                            handleNextQuestion(); // Call the function to move to the next question
+                          }, 600); // Wait for the blinking animation duration before moving to the next question
+                        }}
                       >
                         Yes
                       </Button>
-                      <Button startIcon={<CloseIcon />}
+
+                      <Button
+                        startIcon={<CloseIcon />}
                         sx={{
                           backgroundColor: "rgb(4, 69, 175, 0.15)",
-                          color: ["rgb(4,95,167)"],
-                          border: [1],
+                          color: "rgb(4,95,167)",
+                          border: ratingClicked === "No" ? "2px solid rgb(4, 69, 175)" : "1px solid rgba(4, 95, 167, 0.6)",
                           width: [140],
+                          height: 40,
                           fontSize: [18],
-                          height: 38,
                           fontFamily: ['arial'],
                           '@media (max-width: 700px)': {
-                            fontSize: 16,
-                            width: 120,
-                            height: 35,
-                          },
-                          '@media (max-width: 600px)': {
                             width: 120,
                             height: 35,
                             fontSize: 15,
                           },
-                        }} variant="contained"
-                        key="No" onClick={() => handleRatingClick("No")}
-                        style={{ backgroundColor: ratingClicked === "No" ? "rgb(4, 69, 175)" : "", transition: "background-color 0.3s", }}>
+                          '&:hover': {
+                            backgroundColor: "rgb(4, 69, 175, 0.25)",
+                            border: "2px solid rgb(4, 69, 175)",
+                          },
+                          animation: isBlinking && ratingClicked === "No" ? "blinkTwice 0.3s 2" : "none",
+                        }}
+                        variant="contained"
+                        key="No"
+                        onClick={() => {
+                          handleRatingClick("No");
+                          setTimeout(() => {
+                            handleNextQuestion(); // Call the function to move to the next question
+                          }, 600); // Wait for the blinking animation duration before moving to the next question
+                        }}
+                      >
                         No
                       </Button>
                     </Box>
@@ -419,7 +461,7 @@ function Form() {
                       questions[currentQuestion][2] === "last" && isScreen1000OrLess ? "center" : "left"
                     }
                     sx={{
-                      '@media (max-width: 1000px)': {
+                      '@media (max-width: 1100px)': {
                         fontSize: questions[currentQuestion][2] === "last" ? 20 : 18,
                       },
                     }}
@@ -435,7 +477,7 @@ function Form() {
                         fontFamily: ['arial'],
                         color: "white",
                         backgroundColor: "rgb(4, 69, 175)",
-                        '@media (max-width: 1000px)': {
+                        '@media (max-width: 1100px)': {
                           fontWeight: questions[currentQuestion][2] === "last" ? "800" : "bold",
                         },
                         '@media (max-width: 700px)': {
@@ -445,8 +487,6 @@ function Form() {
                         },
                         '@media (max-width: 500px)': {
                           width: questions[currentQuestion][2] === "last" && "100%",
-                        },
-                        '@media (max-width: 350px)': {
                           paddingLeft: 1.5,
                           paddingRight: 1.5,
                         },
@@ -459,13 +499,13 @@ function Form() {
                       <Box
                         sx={{
                           padding: [1],
-                          fontSize: [16],
+                          fontSize: [13],
                           '@media (max-width: 700px)': {
-                            fontSize: 14,
+                            fontSize: 12,
                           },
                         }}
                       >
-                        click here ↵
+                        press <strong>Enter ↵</strong>
                       </Box>
                     )}
 
