@@ -238,22 +238,22 @@ function Form() {
                 margin={0}
                 // border={1}
                 sx={{
-                  fontSize: [22],
+                  fontSize: [21],
                   overflow: "hidden",
                   '@media (max-width: 1300px)': {
                     paddingLeft: 20,
                     paddingRight: 20,
-                    fontSize: [21]
+                    fontSize: [20]
                   },
                   '@media (max-width: 1100px)': {
                     paddingLeft: 15,
                     paddingRight: 15,
-                    fontSize: [21]
+                    fontSize: [20]
                   },
                   '@media (max-width: 900px)': {
                     paddingLeft: 10,
                     paddingRight: 10,
-                    fontSize: [20]
+                    fontSize: [19]
                   },
                   '@media (max-width: 800px)': {
 
@@ -347,6 +347,38 @@ function Form() {
                         ), // Removes the inbuilt hover text
                       }}
                     />)}
+                  {questions[currentQuestion][1] === "rating" && (
+                    <Box border={0} 
+                    sx={{ fontSize: "13.5px", color: "rgb(4,95,167)", marginLeft: "5px", marginBottom:"1px", marginTop:"-5px" ,
+                    '@media (min-width: 600px)': {
+                      display: "none",
+                    }, }}>
+                      {questions[currentQuestion][2] === "satisfaction" && (
+                        <>
+                           1<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> {"Neutral"} <br />
+                           2<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> {"Very Dissatisfied"} <br />
+                           3<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> {"Very Satisfied"}
+                        </>
+                      )}
+
+                      {questions[currentQuestion][2] === "good" && (
+                        <>
+                          1<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> "Good" <br />
+                          2<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> "Excellent" <br />
+                          3<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> "Very Poor"
+                        </>
+                      )}
+
+                      {questions[currentQuestion][2] === "likely" && (
+                        <>
+                          1<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> "Most Unlikely" <br />
+                          2<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> "Not Sure" <br />
+                          3<ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '900', fontSize: '12px', verticalAlign: 'middle' }} /> "Most Likely"
+                        </>
+                      )}
+                    </Box>
+                  )}
+
                   {questions[currentQuestion][1] === "rating" &&
                     (<ButtonGroup
                       fullWidth={true}
@@ -366,52 +398,6 @@ function Form() {
                             flex: '1 0 calc(20% - 4px)', // Distribute available space evenly and allow 20% width per button
                           }}
                         >
-                          {/* {<span className="responsive-span-600">
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                              {questions[currentQuestion][2] === "satisfaction" && (
-                                <>
-                                  <div>
-                                    1 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Very Dissatisfaction
-                                  </div>
-                                  <div>
-                                    3 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Neutral
-                                  </div>
-                                  <div>
-                                    5 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Very satisfaction
-                                  </div>
-                                </>
-                              )}
-
-                              {questions[currentQuestion][2] === "good" && (
-                                <>
-                                  <div>
-                                    1 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Very Poor
-                                  </div>
-                                  <div>
-                                    3 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Good
-                                  </div>
-                                  <div>
-                                    5 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Excellent
-                                  </div>
-                                </>
-                              )}
-
-                              {questions[currentQuestion][2] === "likely" && (
-                                <>
-                                  <div>
-                                    1 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Most Unlikely
-                                  </div>
-                                  <div>
-                                    3 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Not Sure
-                                  </div>
-                                  <div>
-                                    5 <ArrowForwardIcon style={{ color: "rgb(4,95,167)", fontWeight: '1000', fontSize: '16px', verticalAlign: 'middle' }} /> Most Likely
-                                  </div>
-                                </>
-                              )}
-                            </div>
-                          </span>
-                          } */}
                           <Button
                             onClick={() => {
                               handleRatingClick(rating);
@@ -437,7 +423,7 @@ function Form() {
                             style={{
                               marginTop: '12px',
                               color: 'rgb(4, 69, 175)',
-                              fontSize: '15px', // Initial font size
+                              fontSize: '14px', // Initial font size
                               transition: 'font-size 0.3s', // Add transition for smooth size change
                             }}
                           >
